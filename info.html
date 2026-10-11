@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Info & FAQ — Artieri Suites Bologna</title>
+  <meta name="description" content="Stay information, house rules, FAQ and contacts for Artieri Suites in Bologna.">
+  <link rel="stylesheet" href="style.css">
+  <style>
+
+    .page-header {
+      padding: 120px 2rem 4rem;
+      text-align: center;
+      background: var(--cream);
+    }
+
+    .page-header .section-tag {
+      font-size: 0.68rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      font-weight: 400;
+      margin-bottom: 0.8rem;
+    }
+
+    .page-header .section-title {
+      font-family: 'Poiret One', cursive;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--forest);
+      font-weight: 400;
+    }
+
+    /* =====================
+       INFO GRID
+       ===================== */
+    .info-section {
+      padding: 5rem 2rem;
+    }
+
+    .info-section:nth-child(even) { background: #fff; }
+    .info-section:nth-child(odd)  { background: var(--cream); }
+
+    .info-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem 5rem;
+    }
+
+    .info-block-title {
+      font-family: 'Poiret One', cursive;
+      font-size: 0.8rem;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--forest);
+      font-weight: 400;
+      margin-bottom: 1.4rem;
+      padding-bottom: 0.7rem;
+      border-bottom: 1px solid rgba(139,109,105,0.15);
+    }
+
+    /* Check-in/out table */
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .info-table tr {
+      border-bottom: 1px solid rgba(139,109,105,0.1);
+    }
+
+    .info-table tr:last-child { border-bottom: none; }
+
+    .info-table td {
+      padding: 0.9rem 0;
+      color: var(--mauve);
+      vertical-align: top;
+    }
+
+    .info-table td:first-child {
+      color: var(--forest);
+      font-weight: 400;
+      width: 42%;
+    }
+
+    /* Amenities list */
+    .amenity-list {
+      list-style: none;
+    }
+
+    .amenity-list li {
+      padding: 0.6rem 0;
+      font-size: 0.88rem;
+      color: var(--mauve);
+      border-bottom: 1px solid rgba(139,109,105,0.08);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .amenity-list li:last-child { border-bottom: none; }
+
+    .amenity-dot {
+      width: 4px;
+      height: 4px;
+      background: var(--terracotta);
+      flex-shrink: 0;
+    }
+
+    /* Rules */
+    .rule {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(139,109,105,0.1);
+      font-size: 0.88rem;
+    }
+
+    .rule:last-child { border-bottom: none; }
+
+    .rule-icon {
+      width: 5px;
+      height: 5px;
+      background: var(--forest);
+      flex-shrink: 0;
+      margin-top: 0.55rem;
+    }
+
+    .rule-text { color: var(--mauve); line-height: 1.6; }
+    .rule-text strong { color: var(--forest); font-weight: 400; }
+
+    /* =====================
+       FAQ
+       ===================== */
+    .faq-section {
+      padding: 5rem 2rem;
+      background: var(--forest);
+    }
+
+    .faq-inner {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .faq-title {
+      font-family: 'Poiret One', cursive;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--cream);
+      font-weight: 400;
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid rgba(250,247,242,0.1);
+      padding: 1.5rem 0;
+    }
+
+    .faq-item:first-of-type { border-top: 1px solid rgba(250,247,242,0.1); }
+
+    .faq-q {
+      font-family: 'Jost', sans-serif;
+      font-weight: 400;
+      font-size: 0.88rem;
+      letter-spacing: 1px;
+      color: var(--cream);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+
+    .faq-q::after {
+      content: '+';
+      font-size: 1.2rem;
+      color: var(--sage);
+      transition: transform 0.3s;
+      flex-shrink: 0;
+      margin-left: 1rem;
+    }
+
+    .faq-item.open .faq-q::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-a {
+      font-size: 0.88rem;
+      color: rgba(250,247,242,0.6);
+      line-height: 1.8;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s;
+    }
+
+    .faq-item.open .faq-a {
+      max-height: 300px;
+      padding-top: 1rem;
+    }
+
+    /* =====================
+       CONTACT
+       ===================== */
+    .contact-section {
+      padding: 5rem 2rem;
+      background: var(--cream);
+      text-align: center;
+    }
+
+    .contact-inner {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .contact-inner .section-title {
+      font-family: 'Poiret One', cursive;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--forest);
+      font-weight: 400;
+      margin-bottom: 0.8rem;
+    }
+
+    .contact-inner p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--mauve);
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .contact-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .contact-link-label {
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      font-weight: 400;
+    }
+
+    .contact-link-value {
+      font-size: 1rem;
+      color: var(--forest);
+      font-weight: 400;
+      transition: color 0.25s;
+    }
+
+    .contact-link-value:hover { color: var(--mauve); }
+
+    .contact-divider {
+      width: 1px;
+      height: 30px;
+      background: rgba(139,109,105,0.2);
+    }
+
+    /* =====================
+       RESPONSIVE
+       ===================== */
+    @media (max-width: 700px) {
+      .info-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">Artieri Suites</a>
+    <button class="nav-toggle" aria-label="Menu" onclick="this.classList.toggle('open'); document.querySelector('.nav-links').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links">
+      <a href="index.html#suites">Suites</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="info.html">Info</a>
+      <a href="index.html#book" class="nav-cta">Book Now</a>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <p class="section-tag">Everything you need to know</p>
+    <h1 class="section-title">Stay Information</h1>
+  </div>
+
+  <!-- INFO GRID -->
+  <section class="info-section">
+    <div class="info-inner">
+      <div class="info-grid">
+
+        <!-- Check-in / out -->
+        <div class="reveal">
+          <p class="info-block-title">Check-in & Check-out</p>
+          <table class="info-table">
+            <tr><td>Check-in</td><td>From 15:00<br><span style="font-size:0.8rem;opacity:0.7">Self check-in via your phone</span></td></tr>
+            <tr><td>Check-out</td><td>By 10:00</td></tr>
+            <tr><td>Early / late</td><td>On request — contact us in advance</td></tr>
+            <tr><td>Access</td><td>We send all access details before arrival. No key collection needed.</td></tr>
+          </table>
+        </div>
+
+        <!-- In every suite -->
+        <div class="reveal">
+          <p class="info-block-title">In Every Suite</p>
+          <ul class="amenity-list">
+            <li><span class="amenity-dot"></span>Private en-suite bathroom with shower</li>
+            <li><span class="amenity-dot"></span>Air conditioning</li>
+            <li><span class="amenity-dot"></span>Minibar</li>
+            <li><span class="amenity-dot"></span>Free WiFi</li>
+            <li><span class="amenity-dot"></span>City view (three of four suites)</li>
+            <li><span class="amenity-dot"></span>Lift access</li>
+          </ul>
+        </div>
+
+        <!-- Presidential extras -->
+        <div class="reveal">
+          <p class="info-block-title">Presidential Suite Only</p>
+          <ul class="amenity-list">
+            <li><span class="amenity-dot"></span>Full kitchen</li>
+            <li><span class="amenity-dot"></span>55" television</li>
+            <li><span class="amenity-dot"></span>Double bed + sofa bed</li>
+            <li><span class="amenity-dot"></span>70 sqm — largest suite in the property</li>
+          </ul>
+        </div>
+
+        <!-- House rules -->
+        <div class="reveal">
+          <p class="info-block-title">House Rules</p>
+          <div class="rule">
+            <span class="rule-icon"></span>
+            <p class="rule-text"><strong>Non-smoking</strong> — all suites and common areas are strictly smoke-free.</p>
+          </div>
+          <div class="rule">
+            <span class="rule-icon"></span>
+            <p class="rule-text"><strong>No pets</strong></p>
+          </div>
+          <div class="rule">
+            <span class="rule-icon"></span>
+            <p class="rule-text"><strong>Please respect our neighbours</strong> — quiet hours apply in the evenings.</p>
+          </div>
+          <div class="rule">
+            <span class="rule-icon"></span>
+            <p class="rule-text"><strong>ZTL zone</strong> — the property is inside Bologna's restricted traffic area. Please do not drive to the door.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="faq-inner">
+      <h2 class="faq-title">FAQ</h2>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I get in?</p>
+        <p class="faq-a">There are no keys to collect. Check-in is entirely self-service via your phone — we send you the access details before you arrive, so you can let yourself in whenever you like from 15:00.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Is breakfast included?</p>
+        <p class="faq-a">No. We don't serve breakfast — but you are moments from some of the finest cafés in the city, and we're glad to share where we go ourselves.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Do the suites have a kitchen?</p>
+        <p class="faq-a">Only the Presidential Suite has a full kitchen. The other three suites have a minibar. Bologna's Quadrilatero market — arguably the best food market in Italy — is three minutes on foot.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Is there a lift?</p>
+        <p class="faq-a">Yes, the building has a lift.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Can I park nearby?</p>
+        <p class="faq-a">Via degli Artieri is inside Bologna's ZTL restricted traffic zone. We recommend the Staveco or Tanari car parks and arriving on foot. Contact us before you drive in and we'll help you plan the best approach.</p>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What's the best rate?</p>
+        <p class="faq-a">Booking directly through this site. You get the most favourable rate and correspond with us personally — no intermediaries, no call centres.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section">
+    <div class="contact-inner reveal">
+      <h2 class="section-title">Get in touch</h2>
+      <p>We're glad to help with anything before, during or after your stay.</p>
+      <div class="contact-links">
+        <div class="contact-link">
+          <span class="contact-link-label">Phone & WhatsApp</span>
+          <a href="tel:+393780913611" class="contact-link-value">+39 378 091 3611</a>
+        </div>
+        <div class="contact-divider"></div>
+        <div class="contact-link">
+          <span class="contact-link-label">Email</span>
+          <a href="mailto:info@artierisuites.it" class="contact-link-value">info@artierisuites.it</a>
+        </div>
+        <div class="contact-divider"></div>
+        <div class="contact-link">
+          <span class="contact-link-label">Address</span>
+          <span class="contact-link-value" style="font-size:0.9rem">Via degli Artieri 2, 40125 Bologna</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p class="footer-brand">Artieri Suites</p>
+    <p class="footer-location">Via degli Artieri 2 &nbsp;&middot;&nbsp; Bologna</p>
+    <p class="footer-legal">
+      Artieri Suites di Bolognesi Domenico &nbsp;&middot;&nbsp; P.IVA 04349891202<br>
+      <a href="mailto:info@artierisuites.it">info@artierisuites.it</a>
+      &nbsp;&middot;&nbsp;
+      <a href="tel:+393780913611">+39 378 091 3611</a>
+    </p>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.faq-q').forEach(q => {
+      q.addEventListener('click', () => {
+        const item = q.parentElement;
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 100);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artieri Suites — Bologna</title>
+  <meta name="description" content="Four suites above the rooftops of Bologna, steps from Piazza Maggiore. Curated, not furnished. Book directly for the best rate.">
+  <meta property="og:title" content="Artieri Suites — Bologna">
+  <meta property="og:description" content="Four suites above the rooftops of Bologna, steps from Piazza Maggiore.">
+  <meta property="og:image" content="assets/images/hero.jpg">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* =====================
+       HERO
+       ===================== */
+    .hero {
+      display: flex;
+      height: 100vh;
+      min-height: 600px;
+      padding-top: 64px;
+    }
+
+    .hero-photo {
+      flex: 0 0 60%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-panel {
+      flex: 0 0 40%;
+      background: var(--cream);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3rem 2.8rem;
+      overflow-y: auto;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Jost', sans-serif;
+      font-weight: 400;
+      font-size: 0.7rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--mauve);
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-title {
+      font-family: 'Poiret One', cursive;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--forest);
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--mauve);
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-divider {
+      height: 1px;
+      background: rgba(139, 109, 105, 0.2);
+      margin-bottom: 1.8rem;
+    }
+
+    .booking-label {
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--mauve);
+      margin-bottom: 0.8rem;
+      font-weight: 400;
+    }
+
+    .booking-frame {
+      border: 1px solid rgba(139, 109, 105, 0.2);
+      width: 100%;
+      min-height: 340px;
+    }
+
+    .booking-note {
+      margin-top: 0.7rem;
+      font-size: 0.68rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      text-align: center;
+    }
+
+    .hero-gallery-link {
+      display: block;
+      margin-top: 1.6rem;
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--mauve);
+      text-align: center;
+      transition: color 0.25s;
+    }
+
+    .hero-gallery-link:hover { color: var(--forest); }
+
+    /* =====================
+       INTRO
+       ===================== */
+    .intro {
+      padding: 6rem 2rem;
+      text-align: center;
+      background: var(--cream);
+    }
+
+    .intro-inner {
+      max-width: 620px;
+      margin: 0 auto;
+    }
+
+    .section-tag {
+      font-size: 0.68rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--terracotta);
+      margin-bottom: 1.2rem;
+      font-weight: 400;
+    }
+
+    .section-title {
+      font-family: 'Poiret One', cursive;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--forest);
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+
+    .intro-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--mauve);
+      line-height: 1.9;
+    }
+
+    .intro-pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-top: 4rem;
+      border-top: 1px solid rgba(139,109,105,0.12);
+    }
+
+    .pillar {
+      padding: 2.5rem 2rem;
+      border-right: 1px solid rgba(139,109,105,0.12);
+      text-align: left;
+    }
+
+    .pillar:last-child { border-right: none; }
+
+    .pillar-title {
+      font-family: 'Poiret One', cursive;
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--forest);
+      margin-bottom: 0.8rem;
+      font-weight: 400;
+    }
+
+    .pillar-text {
+      font-size: 0.88rem;
+      color: var(--mauve);
+      line-height: 1.75;
+    }
+
+    .pillar-accent {
+      display: block;
+      width: 24px;
+      height: 2px;
+      margin-bottom: 1.2rem;
+    }
+
+    /* =====================
+       SUITES
+       ===================== */
+    .suites {
+      padding: 6rem 2rem;
+      background: #fff;
+    }
+
+    .suites-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .suites-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5px;
+      max-width: 1100px;
+      margin: 0 auto;
+      background: rgba(139,109,105,0.12);
+    }
+
+    .suite-card {
+      background: var(--cream);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .suite-photo {
+      height: 280px;
+      overflow: hidden;
+    }
+
+    .suite-photo img {
+      transition: transform 0.6s ease;
+    }
+
+    .suite-card:hover .suite-photo img {
+      transform: scale(1.03);
+    }
+
+    .suite-info {
+      padding: 1.8rem 2rem;
+      border-top: 2px solid var(--mustard);
+    }
+
+    .suite-card:nth-child(2) .suite-info { border-top-color: var(--terracotta); }
+    .suite-card:nth-child(3) .suite-info { border-top-color: var(--sage); }
+    .suite-card:nth-child(4) .suite-info { border-top-color: var(--mauve); }
+
+    .suite-name {
+      font-family: 'Poiret One', cursive;
+      font-size: 1rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--forest);
+      margin-bottom: 0.4rem;
+      font-weight: 400;
+    }
+
+    .suite-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--mauve);
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+
+    .suite-meta {
+      font-size: 0.75rem;
+      color: var(--mauve);
+      letter-spacing: 1px;
+      opacity: 0.7;
+    }
+
+    /* =====================
+       LOCATION
+       ===================== */
+    .location {
+      display: flex;
+      min-height: 420px;
+    }
+
+    .location-text {
+      flex: 0 0 40%;
+      background: var(--forest);
+      padding: 5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .location-text .section-title {
+      color: var(--cream);
+      text-align: left;
+      margin-bottom: 1.2rem;
+    }
+
+    .location-address {
+      font-size: 0.88rem;
+      color: rgba(250,247,242,0.6);
+      margin-bottom: 2rem;
+      line-height: 1.8;
+    }
+
+    .distance-list {
+      list-style: none;
+    }
+
+    .distance-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid rgba(250,247,242,0.08);
+      font-size: 0.82rem;
+    }
+
+    .distance-list li:last-child { border-bottom: none; }
+
+    .distance-place { color: rgba(250,247,242,0.75); }
+    .distance-time {
+      color: var(--sage);
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+
+    .location-map {
+      flex: 1;
+      min-height: 420px;
+    }
+
+    .location-map iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* =====================
+       MOBILE
+       ===================== */
+    @media (max-width: 900px) {
+      .hero {
+        flex-direction: column;
+        height: auto;
+      }
+
+      .hero-photo {
+        flex: none;
+        height: 50vw;
+        min-height: 260px;
+        position: relative;
+      }
+
+      .hero-photo img {
+        position: absolute;
+      }
+
+      .hero-panel {
+        flex: none;
+        padding: 2.5rem 1.5rem;
+      }
+
+      .intro-pillars {
+        grid-template-columns: 1fr;
+      }
+
+      .pillar {
+        border-right: none;
+        border-bottom: 1px solid rgba(139,109,105,0.12);
+      }
+
+      .pillar:last-child { border-bottom: none; }
+
+      .suites-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .location {
+        flex-direction: column;
+      }
+
+      .location-text {
+        flex: none;
+        padding: 3.5rem 1.5rem;
+      }
+
+      .location-map {
+        min-height: 300px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title { font-size: 1.8rem; }
+      .hero-panel { padding: 2rem 1.2rem; }
+      .intro { padding: 4rem 1.2rem; }
+      .suites { padding: 4rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">Artieri Suites</a>
+    <button class="nav-toggle" aria-label="Menu" onclick="this.classList.toggle('open'); document.querySelector('.nav-links').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links">
+      <a href="index.html#suites">Suites</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="info.html">Info</a>
+      <a href="index.html#book" class="nav-cta">Book Now</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-photo">
+      <!-- Replace with your best view/exterior photo -->
+      <img src="assets/images/hero.jpg" alt="View of Bologna from Artieri Suites">
+    </div>
+    <div class="hero-panel">
+      <p class="hero-eyebrow">Bologna, Italy</p>
+      <h1 class="hero-title">Artieri<br>Suites</h1>
+      <p class="hero-subtitle">Above the rooftops of the old city.</p>
+      <div class="hero-divider"></div>
+      <p class="booking-label">Reserve directly</p>
+      <iframe
+        class="booking-frame"
+        src="https://artierisuitespiazzamaggiore.bookpage.io/it"
+        frameborder="0"
+        scrolling="auto"
+        title="Book Artieri Suites"
+        id="book">
+      </iframe>
+      <p class="booking-note">Best rate &middot; Flexible cancellation</p>
+      <a href="gallery.html" class="hero-gallery-link">View Gallery &rarr;</a>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <section class="intro">
+    <div class="intro-inner">
+      <div class="deco-line reveal"><span class="diamond"></span></div>
+      <p class="section-tag" style="margin-top:1.5rem">The property</p>
+      <h2 class="section-title reveal">Curated, not furnished.</h2>
+      <p class="intro-text reveal">
+        Four suites above the historic centre, a few steps from Piazza Maggiore.
+        This is not a rental in the ordinary sense — every detail was chosen,
+        from the linens to the light to the framing of the view.
+        We kept Artieri small so that nothing would be left to chance.
+        The towers at your window, the terracotta rooftops below.
+        You are not near Bologna here. You are inside it.
+      </p>
+    </div>
+
+    <div class="intro-pillars reveal">
+      <div class="pillar">
+        <span class="pillar-accent" style="background:var(--terracotta)"></span>
+        <p class="pillar-title">The View</p>
+        <p class="pillar-text">Three of the four suites open directly onto the towers and rooftops of the centro storico. The fourth turns inward, to silence.</p>
+      </div>
+      <div class="pillar">
+        <span class="pillar-accent" style="background:var(--sage)"></span>
+        <p class="pillar-title">The Address</p>
+        <p class="pillar-text">Via degli Artieri 2. Piazza Maggiore, the Archiginnasio, and the Quadrilatero are all within a few minutes on foot.</p>
+      </div>
+      <div class="pillar">
+        <span class="pillar-accent" style="background:var(--mustard)"></span>
+        <p class="pillar-title">Directly with us</p>
+        <p class="pillar-text">Reserve through this page and you correspond with us alone — the most favourable rate, and a single point of contact from booking to departure.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUITES -->
+  <section class="suites" id="suites">
+    <div class="suites-header reveal">
+      <p class="section-tag">Accommodation</p>
+      <h2 class="section-title">The Suites</h2>
+    </div>
+    <div class="suites-grid">
+
+      <div class="suite-card reveal">
+        <div class="suite-photo">
+          <!-- Replace: your best photo of this suite -->
+          <img src="assets/images/suite-presidential.jpg" alt="Suites Presidential — City View">
+        </div>
+        <div class="suite-info">
+          <h3 class="suite-name">Presidential Suite — City View</h3>
+          <p class="suite-desc">The largest of the four. A full kitchen, a living room that opens to the skyline, and seventy square metres arranged around the view that gives the suite its name.</p>
+          <p class="suite-meta">70 sqm &nbsp;&middot;&nbsp; Up to 4 guests &nbsp;&middot;&nbsp; Full kitchen &nbsp;&middot;&nbsp; 55" TV</p>
+        </div>
+      </div>
+
+      <div class="suite-card reveal">
+        <div class="suite-photo">
+          <img src="assets/images/suite-deluxe-city.jpg" alt="Suites Deluxe — City View">
+        </div>
+        <div class="suite-info">
+          <h3 class="suite-name">Deluxe Suite — City View</h3>
+          <p class="suite-desc">The city at the window, room for a family or two couples, and the quiet that comes from being above the street rather than on it.</p>
+          <p class="suite-meta">20 sqm &nbsp;&middot;&nbsp; Up to 4 guests &nbsp;&middot;&nbsp; City view &nbsp;&middot;&nbsp; Minibar</p>
+        </div>
+      </div>
+
+      <div class="suite-card reveal">
+        <div class="suite-photo">
+          <img src="assets/images/suite-superior.jpg" alt="Suites Superior — City View">
+        </div>
+        <div class="suite-info">
+          <h3 class="suite-name">Superior Suite — City View</h3>
+          <p class="suite-desc">Composed for two. The rooftops of Bologna on one side, a private calm on the other.</p>
+          <p class="suite-meta">20 sqm &nbsp;&middot;&nbsp; Up to 2 guests &nbsp;&middot;&nbsp; City view &nbsp;&middot;&nbsp; Minibar</p>
+        </div>
+      </div>
+
+      <div class="suite-card reveal">
+        <div class="suite-photo">
+          <img src="assets/images/suite-deluxe-internal.jpg" alt="Suites Deluxe — Internal View">
+        </div>
+        <div class="suite-info">
+          <h3 class="suite-name">Deluxe Suite — Internal View</h3>
+          <p class="suite-desc">The quietest room in the house. It looks inward, away from the city's rhythm — for those who come to Bologna to rest as much as to see it.</p>
+          <p class="suite-meta">15 sqm &nbsp;&middot;&nbsp; Up to 3 guests &nbsp;&middot;&nbsp; Interior view &nbsp;&middot;&nbsp; Minibar</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="location" id="location">
+    <div class="location-text">
+      <h2 class="section-title reveal">How to<br>reach us</h2>
+      <p class="location-address reveal">
+        Via degli Artieri 2<br>
+        40125 Bologna, Italy
+      </p>
+      <ul class="distance-list reveal">
+        <li><span class="distance-place">Piazza Maggiore</span><span class="distance-time">2 min</span></li>
+        <li><span class="distance-place">Quadrilatero market</span><span class="distance-time">3 min</span></li>
+        <li><span class="distance-place">Archiginnasio</span><span class="distance-time">4 min</span></li>
+        <li><span class="distance-place">Le Due Torri</span><span class="distance-time">5 min</span></li>
+        <li><span class="distance-place">Bologna Centrale</span><span class="distance-time">12 min</span></li>
+      </ul>
+    </div>
+    <div class="location-map">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2847.0!2d11.3432!3d44.4938!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x477fd49700000001%3A0x1!2sVia+degli+Artieri+2%2C+40125+Bologna+BO!5e0!3m2!1sen!2sit!4v1"
+        allowfullscreen=""
+        loading="lazy"
+        title="Artieri Suites location">
+      </iframe>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p class="footer-brand">Artieri Suites</p>
+    <p class="footer-location">Via degli Artieri 2 &nbsp;&middot;&nbsp; Bologna</p>
+    <p class="footer-legal">
+      Artieri Suites di Bolognesi Domenico &nbsp;&middot;&nbsp; P.IVA 04349891202<br>
+      <a href="mailto:info@artierisuites.it">info@artierisuites.it</a>
+      &nbsp;&middot;&nbsp;
+      <a href="tel:+393780913611">+39 378 091 3611</a>
+    </p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 100);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
