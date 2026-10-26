@@ -4,129 +4,90 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gallery — Artieri Suites Bologna</title>
-  <meta name="description" content="Photo gallery of Artieri Suites, Bologna — curated spaces above the historic centre.">
+  <meta name="description" content="Photographs of Artieri Suites, four suites above the historic centre of Bologna.">
   <link rel="stylesheet" href="style.css">
   <style>
     body { background: var(--forest); }
 
-    .gallery-hero {
-      padding-top: 64px;
-      padding-bottom: 1.5rem;
+    .gallery-head {
+      padding: calc(64px + 3rem) 2rem 2.5rem;
       text-align: center;
-      background: var(--forest);
     }
 
-    .gallery-hero .section-title {
+    .gallery-title {
       font-family: 'Poiret One', cursive;
-      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 400;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
       letter-spacing: 6px;
       text-transform: uppercase;
       color: var(--cream);
-      font-weight: 400;
-      padding: 2rem 0 0.5rem;
     }
 
-    .gallery-hero .section-tag {
-      font-size: 0.68rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
+    .gallery-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.1rem;
       color: var(--sage);
-      font-weight: 400;
+      margin-top: 0.4rem;
     }
 
-    /* =====================
-       MASONRY GRID
-       ===================== */
+    /* Masonry: ogni foto mantiene le sue proporzioni naturali */
     .gallery-grid {
       columns: 3;
-      column-gap: 4px;
-      padding: 0 4px 4px;
-      background: var(--forest);
+      column-gap: 6px;
+      padding: 0 6px 6px;
     }
 
-    .gallery-item {
-      break-inside: avoid;
-      margin-bottom: 4px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .gallery-item img {
-      display: block;
+    .gallery-grid img {
       width: 100%;
       height: auto;
-      transition: transform 0.5s ease;
+      margin-bottom: 6px;
+      break-inside: avoid;
+      opacity: 0;
+      transition: opacity 0.8s ease;
     }
 
-    .gallery-item:hover img {
-      transform: scale(1.02);
-    }
+    .gallery-grid img.is-loaded { opacity: 1; }
 
-    /* Vary natural heights using aspect-ratio */
-    .gallery-item.tall   { aspect-ratio: 3/4; }
-    .gallery-item.wide   { aspect-ratio: 4/3; }
-    .gallery-item.square { aspect-ratio: 1/1; }
-
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* =====================
-       CTA STRIP
-       ===================== */
     .gallery-cta {
-      background: var(--forest);
       padding: 4rem 2rem;
       text-align: center;
-      border-top: 1px solid rgba(250,247,242,0.06);
     }
 
     .gallery-cta p {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
       font-size: 1.2rem;
-      color: rgba(250,247,242,0.6);
-      margin-bottom: 1.8rem;
+      color: rgba(250, 247, 242, 0.7);
+      margin-bottom: 1.6rem;
     }
 
-    .btn-primary {
+    .btn-outline {
       display: inline-block;
       font-family: 'Poiret One', cursive;
-      font-size: 0.82rem;
+      font-size: 0.9rem;
       letter-spacing: 4px;
       text-transform: uppercase;
       color: var(--cream);
-      border: 1px solid rgba(250,247,242,0.35);
-      padding: 0.9rem 2.8rem;
-      transition: background 0.25s, color 0.25s, border-color 0.25s;
+      border: 1px solid rgba(250, 247, 242, 0.4);
+      padding: 0.9rem 2.6rem;
+      transition: background 0.25s, color 0.25s;
     }
 
-    .btn-primary:hover {
-      background: var(--cream);
-      color: var(--forest);
-      border-color: var(--cream);
-    }
+    .btn-outline:hover { background: var(--cream); color: var(--forest); }
 
-    /* =====================
-       RESPONSIVE
-       ===================== */
-    @media (max-width: 768px) {
-      .gallery-grid { columns: 2; }
-    }
+    .footer { border-top: 1px solid rgba(250, 247, 242, 0.08); }
 
-    @media (max-width: 480px) {
-      .gallery-grid { columns: 1; }
-    }
+    @media (max-width: 900px) { .gallery-grid { columns: 2; } }
+    @media (max-width: 520px) { .gallery-grid { columns: 1; } }
+    @media (prefers-reduced-motion: reduce) { .gallery-grid img { transition: none; } }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
   <nav class="nav">
     <a href="index.html" class="nav-brand">Artieri Suites</a>
-    <button class="nav-toggle" aria-label="Menu" onclick="this.classList.toggle('open'); document.querySelector('.nav-links').classList.toggle('open')">
+    <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
       <span></span><span></span><span></span>
     </button>
     <div class="nav-links">
@@ -137,73 +98,33 @@
     </div>
   </nav>
 
-  <!-- HEADER -->
-  <div class="gallery-hero">
-    <p class="section-tag">The spaces</p>
-    <h1 class="section-title">Gallery</h1>
-  </div>
+  <header class="gallery-head">
+    <h1 class="gallery-title">Gallery</h1>
+    <p class="gallery-sub">Four suites, one view of Bologna.</p>
+  </header>
 
-  <!-- GRID -->
-  <!-- Replace src paths with your actual photos.
-       Adjust .tall / .wide / .square to match each photo's natural orientation. -->
-  <div class="gallery-grid">
+  <!-- Foto caricate in automatico: assets/images/gallery-01.jpg, gallery-02.jpg ... -->
+  <div class="gallery-grid" id="galleryGrid"></div>
 
-    <div class="gallery-item tall">
-      <img src="assets/images/gallery-01.jpg" alt="Artieri Suites Bologna">
-    </div>
-    <div class="gallery-item wide">
-      <img src="assets/images/gallery-02.jpg" alt="Artieri Suites Bologna">
-    </div>
-    <div class="gallery-item square">
-      <img src="assets/images/gallery-03.jpg" alt="Artieri Suites Bologna">
-    </div>
-    <div class="gallery-item wide">
-      <img src="assets/images/gallery-04.jpg" alt="Artieri Suites Bologna">
-    </div>
-    <div class="gallery-item tall">
-      <img src="assets/images/gallery-05.jpg" alt="Artieri Suites Bologna">
-    </div>
-    <div class="gallery-item square">
-      <img src="assets/images/gallery-06.jpg" alt="Artieri Suites Bologna">
-    </div>
-    <div class="gallery-item square">
-      <img src="assets/images/gallery-07.jpg" alt="Artieri Suites Bologna">
-    </div>
-    <div class="gallery-item wide">
-      <img src="assets/images/gallery-08.jpg" alt="Artieri Suites Bologna">
-    </div>
-    <div class="gallery-item tall">
-      <img src="assets/images/gallery-09.jpg" alt="Artieri Suites Bologna">
-    </div>
-    <div class="gallery-item square">
-      <img src="assets/images/gallery-10.jpg" alt="Artieri Suites Bologna">
-    </div>
-    <div class="gallery-item wide">
-      <img src="assets/images/gallery-11.jpg" alt="Artieri Suites Bologna">
-    </div>
-    <div class="gallery-item tall">
-      <img src="assets/images/gallery-12.jpg" alt="Artieri Suites Bologna">
-    </div>
-
-  </div>
-
-  <!-- CTA -->
   <div class="gallery-cta">
     <p>Every object here was placed by someone who cared where it went.</p>
-    <a href="index.html#book" class="btn-primary">Check Availability</a>
+    <a href="index.html#book" class="btn-outline">Check availability</a>
   </div>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <p class="footer-brand">Artieri Suites</p>
-    <p class="footer-location">Via degli Artieri 2 &nbsp;&middot;&nbsp; Bologna</p>
+    <p class="footer-location">Via degli Artieri 2, Bologna</p>
     <p class="footer-legal">
-      Artieri Suites di Bolognesi Domenico &nbsp;&middot;&nbsp; P.IVA 04349891202<br>
+      Artieri Suites di Bolognesi Domenico, P.IVA 04349891202<br>
       <a href="mailto:info@artierisuites.it">info@artierisuites.it</a>
       &nbsp;&middot;&nbsp;
       <a href="tel:+393780913611">+39 378 091 3611</a>
     </p>
   </footer>
 
+  <script src="photos.js"></script>
+  <script>
+    loadPhotos(document.getElementById('galleryGrid'), 'gallery-', { alt: 'Artieri Suites, Bologna' });
+  </script>
 </body>
 </html>
