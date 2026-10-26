@@ -13,7 +13,7 @@
     /* =====================
        SPLIT LAYOUT
        Sinistra: foto e contenuti che scorrono
-       Destra: pannello prenotazione fisso
+       Destra: pannello prenotazione compatto, sticky
        ===================== */
     .split {
       display: grid;
@@ -28,11 +28,9 @@
     .booking-panel {
       position: sticky;
       top: 64px;
-      height: calc(100vh - 64px);
-      height: calc(100dvh - 64px);
       display: flex;
       flex-direction: column;
-      padding: 2rem 2.2rem 1.4rem;
+      padding: 2rem 2.2rem 2rem;
       background: var(--cream);
       border-left: 1px solid rgba(139, 109, 105, 0.15);
     }
@@ -63,18 +61,15 @@
       margin: 1.2rem 0 0;
     }
 
-    .frame-wrap {
-      flex: 1;
-      min-height: 0;
-      background: #fff;
-      border: 1px solid rgba(139, 109, 105, 0.2);
+    /* Widget di prenotazione (ciaobooking) */
+    .be-widget-wrap {
+      width: 100%;
     }
 
-    .frame-wrap iframe {
+    .be-widget-wrap be-widget {
       display: block;
-      width: 100%;
-      height: 100%;
-      border: 0;
+      max-width: 360px;
+      margin: 0;
     }
 
     .booking-note {
@@ -307,12 +302,9 @@
 
       .booking-panel {
         position: static;
-        height: auto;
         border-left: 0;
         padding: 2rem 1.25rem;
       }
-
-      .frame-wrap { height: 680px; flex: none; }
 
       .pillars { grid-template-columns: 1fr; }
       .pillar { margin-right: 0; padding-right: 0; }
@@ -445,19 +437,28 @@
 
     </div>
 
-    <!-- DESTRA: fissa -->
+    <!-- DESTRA: prenotazione compatta -->
     <aside class="booking-panel" id="book">
       <div class="panel-head">
         <p class="panel-place">Bologna, above the old city</p>
         <h1 class="panel-title">Artieri Suites</h1>
         <div class="panel-rule"></div>
       </div>
-      <div class="frame-wrap">
-        <iframe
-          src="https://artierisuitespiazzamaggiore.bookpage.io/"
-          title="Book Artieri Suites"
-          scrolling="auto"></iframe>
+
+      <div class="be-widget-wrap">
+        <be-widget
+          host="https://artierisuitespiazzamaggiore.bookpage.io"
+          property-id="149030"
+          booking-network-id="1852"
+          default-adults="2"
+          default-children="0"
+          primary-color="#3D4D3A"
+          background-color="#FAF7F2"
+          border-color="#8B6D69"
+          button-text-color="#FAF7F2">
+        </be-widget>
       </div>
+
       <p class="booking-note">Direct reservation, flexible cancellation</p>
     </aside>
 
@@ -475,6 +476,7 @@
   </footer>
 
   <script src="photos.js"></script>
+  <script src="https://cdn.ciaobooking.com/widget/js/app.js"></script>
   <script>
     loadPhotos(document.getElementById('photoStream'), 'photo-', { alt: 'Artieri Suites, Bologna' });
     document.querySelectorAll('.nav-links a').forEach(function (a) {
