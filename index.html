@@ -17,7 +17,7 @@
        ===================== */
     .split {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) clamp(400px, 36vw, 560px);
+      grid-template-columns: minmax(0, 1fr) clamp(460px, 40vw, 620px);
       padding-top: 64px;
       align-items: start;
     }
@@ -30,7 +30,7 @@
       top: 64px;
       display: flex;
       flex-direction: column;
-      padding: 2rem 2.2rem 2rem;
+      padding: 2rem 1.6rem 2rem;
       background: var(--cream);
       border-left: 1px solid rgba(139, 109, 105, 0.15);
     }
@@ -64,11 +64,12 @@
     /* Widget di prenotazione (ciaobooking) */
     .be-widget-wrap {
       width: 100%;
+      overflow: visible;
     }
 
     .be-widget-wrap be-widget {
       display: block;
-      max-width: 360px;
+      width: 100%;
       margin: 0;
     }
 
