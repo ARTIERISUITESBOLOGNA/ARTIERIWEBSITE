@@ -1,33 +1,76 @@
 <!DOCTYPE html>
+<!--
+  ============================================================
+  ARTIERI SUITES — HOME PAGE (index.html)
+  ============================================================
+
+  STRUTTURA DELLA PAGINA
+  1. HEAD          meta tag, SEO, caratteri (font)
+  2. STILI         CSS della pagina, diviso per sezione
+  3. NAV           barra di navigazione in alto
+  4. COLONNA SX    foto, testo introduttivo, suite, posizione
+  5. COLONNA DX    pannello di prenotazione (widget SmartPMS)
+  6. FOOTER        dati fiscali, contatti, privacy
+  7. SCRIPT        caricamento foto, widget, stile del widget
+
+  FILE COLLEGATI
+  - style.css      stili comuni a tutte le pagine (nav, footer)
+  - photos.js      carica le foto in automatico dai nomi dei file
+  - privacy.html   informativa privacy
+  - gallery.html   galleria fotografica
+  - info.html      informazioni pratiche e FAQ
+
+  FOTO (in assets/images/, estensione .jpg minuscola)
+  - photo-01.jpg, photo-02.jpg ...   colonna sinistra e carosello mobile
+  - gallery-01.jpg, gallery-02.jpg   pagina galleria
+  - suite-presidential.jpg
+  - suite-deluxe-city.jpg
+  - suite-superior.jpg
+  - suite-deluxe-internal.jpg
+  ============================================================
+-->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ===== SEO: titolo e descrizione mostrati su Google ===== -->
   <title>Artieri Suites — Bologna</title>
   <meta name="description" content="Four suites above the rooftops of Bologna, steps from Piazza Maggiore. Curated, not furnished. Reserve directly.">
+
+  <!-- ===== Anteprima quando il link viene condiviso (WhatsApp, social) ===== -->
   <meta property="og:title" content="Artieri Suites — Bologna">
   <meta property="og:description" content="Four suites above the rooftops of Bologna, steps from Piazza Maggiore.">
   <meta property="og:image" content="assets/images/photo-01.jpg">
+
+  <!-- ===== Fogli di stile e caratteri ===== -->
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Jost serve anche al widget di prenotazione: se manca, il widget usa Montserrat -->
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
   <style>
-    /* =====================
-       SPLIT LAYOUT
-       Sinistra: foto e contenuti che scorrono
-       Destra: pannello prenotazione compatto, sticky
-       ===================== */
+    /* ==========================================================
+       IMPIANTO DELLA PAGINA
+       Due colonne: a sinistra i contenuti che scorrono,
+       a destra il pannello di prenotazione che resta fermo.
+       Su schermi stretti le due colonne diventano una sola.
+       ========================================================== */
     .split {
       display: grid;
+      /* Colonna sinistra elastica, colonna destra tra 460px e 620px */
       grid-template-columns: minmax(0, 1fr) clamp(460px, 40vw, 620px);
-      padding-top: 64px;
+      padding-top: 64px; /* spazio per la barra di navigazione fissa */
       align-items: start;
     }
 
     .stream { min-width: 0; }
 
-    /* ---------- Pannello prenotazione ---------- */
+    /* ==========================================================
+       PANNELLO DI PRENOTAZIONE (colonna destra)
+       position: sticky lo tiene visibile mentre la pagina scorre
+       ========================================================== */
     .booking-panel {
       position: sticky;
       top: 64px;
@@ -40,6 +83,7 @@
 
     .panel-head { margin-bottom: 1.4rem; }
 
+    /* Sopratitolo in corsivo: "Bologna, above the old city" */
     .panel-place {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
@@ -48,6 +92,7 @@
       margin-bottom: 0.3rem;
     }
 
+    /* Titolo principale della pagina (tag h1) */
     .panel-title {
       font-family: 'Poiret One', cursive;
       font-weight: 400;
@@ -64,7 +109,10 @@
       margin: 1.2rem 0 0;
     }
 
-    /* Widget di prenotazione (ciaobooking) */
+    /* Contenitore del widget SmartPMS.
+       NOTA: il widget è un componente isolato (Shadow DOM),
+       quindi il suo interno NON si modifica da qui:
+       vedi lo script in fondo alla pagina. */
     .be-widget-wrap {
       width: 100%;
       overflow: visible;
@@ -83,7 +131,11 @@
       text-align: center;
     }
 
-    /* ---------- Colonna foto ---------- */
+    /* ==========================================================
+       COLONNA FOTO
+       Le immagini sono inserite da photos.js, non scritte a mano.
+       Compaiono in dissolvenza quando finiscono di caricarsi.
+       ========================================================== */
     .photo-stream {
       display: flex;
       flex-direction: column;
@@ -102,18 +154,22 @@
 
     .photo-stream img.is-loaded { opacity: 1; }
 
+    /* Riquadro verde chiaro quando non ci sono ancora foto caricate */
     .photo-stream.is-empty {
       min-height: calc(100vh - 64px);
       background: rgba(157, 174, 133, 0.18);
     }
 
-    /* ---------- Testo introduttivo ---------- */
+    /* ==========================================================
+       TESTO INTRODUTTIVO E TRE PILASTRI
+       ========================================================== */
     .intro {
       padding: 6rem clamp(1.5rem, 6vw, 5rem) 5rem;
     }
 
     .intro-inner { max-width: 620px; }
 
+    /* Titolo di sezione, usato anche in "The Suites" e "How to reach us" */
     .section-title {
       font-family: 'Poiret One', cursive;
       font-weight: 400;
@@ -144,6 +200,7 @@
       margin-right: 1.8rem;
     }
 
+    /* Trattino colorato sopra ogni pilastro (terracotta, salvia, senape) */
     .pillar-accent {
       display: block;
       width: 24px;
@@ -166,7 +223,10 @@
       line-height: 1.7;
     }
 
-    /* ---------- Suite ---------- */
+    /* ==========================================================
+       SCHEDE DELLE SUITE
+       Due colonne su desktop, una sola su telefono.
+       ========================================================== */
     .suites {
       padding: 5rem clamp(1.5rem, 6vw, 5rem);
       background: #fff;
@@ -179,6 +239,7 @@
       margin-top: 1rem;
     }
 
+    /* Riquadro della foto: resta visibile anche senza immagine */
     .suite-photo {
       aspect-ratio: 4 / 3;
       overflow: hidden;
@@ -204,6 +265,7 @@
       margin-bottom: 0.5rem;
     }
 
+    /* Ogni suite ha un colore di bordo diverso, in ordine di comparsa */
     .suite:nth-child(2) .suite-name { border-top-color: var(--terracotta); }
     .suite:nth-child(3) .suite-name { border-top-color: var(--sage); }
     .suite:nth-child(4) .suite-name { border-top-color: var(--mauve); }
@@ -223,7 +285,12 @@
       opacity: 0.98;
     }
 
-    /* ---------- Posizione ---------- */
+    /* ==========================================================
+       POSIZIONE
+       A sinistra indirizzo e distanze, a destra il link alla mappa.
+       NOTA: la mappa è un link e non una mappa incorporata,
+       per non caricare cookie di Google senza consenso.
+       ========================================================== */
     .location {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
@@ -257,18 +324,29 @@
     .distance-list li:last-child { border-bottom: none; }
     .distance-list span:last-child { color: var(--sage); }
 
-    .location-map iframe {
-      display: block;
-      width: 100%;
+    /* Riquadro cliccabile che apre Google Maps in una nuova scheda */
+    .map-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       height: 100%;
       min-height: 440px;
-      border: 0;
+      background: rgba(157, 174, 133, 0.18);
+      color: var(--forest);
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-bottom: 2px solid var(--mustard);
     }
 
-    /* =====================
-       TABLET E MOBILE
-       Foto in carosello orizzontale, poi prenotazione, poi contenuti
-       ===================== */
+    .map-link:hover { background: rgba(157, 174, 133, 0.3); }
+
+    /* ==========================================================
+       TABLET E TELEFONO (fino a 1023px)
+       Le due colonne diventano una sola, in quest'ordine:
+       foto, prenotazione, introduzione, suite, posizione.
+       ========================================================== */
     @media (max-width: 1023px) {
       .split {
         display: flex;
@@ -278,12 +356,13 @@
 
       .stream { display: contents; }
 
-      .photo-stream { order: 1; }
-      .booking-panel { order: 2; }
-      .intro { order: 3; }
-      .suites { order: 4; }
-      .location { order: 5; }
+      .photo-stream   { order: 1; }
+      .booking-panel  { order: 2; }
+      .intro          { order: 3; }
+      .suites         { order: 4; }
+      .location       { order: 5; }
 
+      /* Le foto diventano un carosello che scorre di lato */
       .photo-stream {
         flex-direction: row;
         overflow-x: auto;
@@ -304,6 +383,7 @@
 
       .photo-stream.is-empty { min-height: 58vh; }
 
+      /* Il pannello smette di restare fermo e scorre con la pagina */
       .booking-panel {
         position: static;
         border-left: 0;
@@ -314,9 +394,12 @@
       .pillar { margin-right: 0; padding-right: 0; }
 
       .location { grid-template-columns: 1fr; }
-      .location-map iframe { min-height: 320px; }
+
+      /* Riquadro mappa più basso, per non occupare mezzo schermo */
+      .map-link { min-height: 180px; }
     }
 
+    /* ===== Telefono stretto (fino a 640px) ===== */
     @media (max-width: 640px) {
       .suites-grid { grid-template-columns: 1fr; }
       .intro { padding: 4rem 1.25rem; }
@@ -324,29 +407,18 @@
       .location-text { padding: 3rem 1.25rem; }
     }
 
+    /* ===== Per chi ha disattivato le animazioni nel sistema ===== */
     @media (prefers-reduced-motion: reduce) {
       .photo-stream img { transition: none; }
     }
-      .map-link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    min-height: 440px;
-    background: rgba(157, 174, 133, 0.18);
-    color: var(--forest);
-    font-size: 1.1rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-bottom: 2px solid var(--mustard);
-  }
-.map-link:hover { background: rgba(157, 174, 133, 0.3); }
-       
   </style>
 </head>
 <body>
 
+  <!-- ==========================================================
+       NAVIGAZIONE
+       Il pulsante con le tre righe apre il menu su telefono.
+       ========================================================== -->
   <nav class="nav">
     <a href="index.html" class="nav-brand">Artieri Suites</a>
     <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
@@ -362,12 +434,28 @@
 
   <main class="split">
 
-    <!-- SINISTRA: scorre -->
+    <!-- ==========================================================
+         COLONNA SINISTRA — contenuti che scorrono
+         ========================================================== -->
     <div class="stream">
 
-      <!-- Foto caricate in automatico: assets/images/photo-01.jpg, photo-02.jpg ... -->
+      <!-- FOTO
+           Questo contenitore è vuoto di proposito: le immagini
+           vengono inserite da photos.js, che cerca in assets/images
+           i file photo-01.jpg, photo-02.jpg e così via, finché
+           i numeri sono consecutivi. Per aggiungere una foto basta
+           caricarla col numero successivo, senza toccare il codice. -->
       <div class="photo-stream" id="photoStream" aria-label="Photographs of Artieri Suites"></div>
 
+      <!-- ==========================================================
+           TESTO INTRODUTTIVO
+           ----------------------------------------------------------
+           COPY — da rileggere con attenzione.
+           Tono: editoriale, sobrio. Nessuna autodichiarazione di lusso,
+           nessun superlativo, nessun punto esclamativo.
+           Il posizionamento è affidato a un'unica frase, detta una volta:
+           "Curated, not furnished."
+           ========================================================== -->
       <section class="intro">
         <div class="intro-inner">
           <h2 class="section-title">Curated, not furnished.</h2>
@@ -381,6 +469,9 @@
           </p>
         </div>
 
+        <!-- TRE PILASTRI
+             COPY — tre argomenti di vendita, uno per colonna:
+             la vista, la posizione, il vantaggio della prenotazione diretta. -->
         <div class="pillars">
           <div class="pillar">
             <span class="pillar-accent" style="background:var(--terracotta)"></span>
@@ -400,6 +491,15 @@
         </div>
       </section>
 
+      <!-- ==========================================================
+           LE SUITE
+           ----------------------------------------------------------
+           COPY e DATI — da verificare prima della pubblicazione.
+           Ogni scheda ha una descrizione in corsivo (tono narrativo)
+           e una riga di dati concreti (metratura, ospiti, dotazioni).
+           I dati devono coincidere con quelli pubblicati sul
+           booking engine SmartPMS e nella pagina info.html.
+           ========================================================== -->
       <section class="suites" id="suites">
         <h2 class="section-title">The Suites</h2>
         <div class="suites-grid">
@@ -435,6 +535,12 @@
         </div>
       </section>
 
+      <!-- ==========================================================
+           POSIZIONE
+           I tempi indicati sono a piedi. Vanno verificati.
+           La mappa è un link e non una mappa incorporata:
+           così il sito non installa cookie di Google.
+           ========================================================== -->
       <section class="location" id="location">
         <div class="location-text">
           <h2 class="section-title">How to reach us</h2>
@@ -448,17 +554,28 @@
           </ul>
         </div>
         <div class="location-map">
-            <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=Via+degli+Artieri+2+Bologna" target="_blank" rel="noopener">
-            Apri la mappa su Google Maps →
-        </a>
+          <a class="map-link"
+             href="https://www.google.com/maps/search/?api=1&query=Via+degli+Artieri+2+Bologna"
+             target="_blank" rel="noopener">
+            Open in Google Maps →
+          </a>
         </div>
       </section>
 
     </div>
 
-    <!-- DESTRA: prenotazione compatta -->
+    <!-- ==========================================================
+         COLONNA DESTRA — prenotazione
+         ----------------------------------------------------------
+         Il widget è fornito da SmartPMS e ciaobooking.
+         I tre valori host, property-id e booking-network-id
+         vengono dal pannello SmartPMS: non modificarli a mano.
+         Carattere, raggio dei bordi e lingua si impostano
+         nel pannello SmartPMS, non qui.
+         ========================================================== -->
     <aside class="booking-panel" id="book">
       <div class="panel-head">
+        <!-- COPY — sopratitolo e titolo del sito -->
         <p class="panel-place">Bologna, above the old city</p>
         <h1 class="panel-title">Artieri Suites</h1>
         <div class="panel-rule"></div>
@@ -478,11 +595,18 @@
         </be-widget>
       </div>
 
+      <!-- COPY — promessa sotto il pulsante.
+           Verificare che corrisponda alle condizioni reali
+           pubblicate sul booking engine. -->
       <p class="booking-note">Direct reservation, flexible cancellation</p>
     </aside>
 
   </main>
 
+  <!-- ==========================================================
+       FOOTER
+       Dati fiscali obbligatori, contatti, privacy.
+       ========================================================== -->
   <footer class="footer">
     <p class="footer-brand">Artieri Suites</p>
     <p class="footer-location">Via degli Artieri 2, Bologna</p>
@@ -495,51 +619,75 @@
     <p class="footer-legal"><a href="privacy.html">Privacy Policy</a></p>
   </footer>
 
+  <!-- ==========================================================
+       SCRIPT
+       ========================================================== -->
+
+  <!-- Caricamento automatico delle foto -->
   <script src="photos.js"></script>
+
+  <!-- Widget di prenotazione (SmartPMS / ciaobooking) -->
   <script src="https://cdn.ciaobooking.com/widget/js/app.js"></script>
+
   <script>
-  // 1. Il CSS da applicare al widget, scritto come testo tra backtick
-  (function () {
-    var css = `
-      /* Font Jost su tutto il widget */
-      * {
-        font-family: 'Jost', sans-serif !important;
-      }
+    /* ----------------------------------------------------------
+       STILE DEL WIDGET DI PRENOTAZIONE
 
-      /* Pulsante "Controlla Disponibilità" */
-      .submit-btn {
-        font-size: 0.85rem !important;
-        letter-spacing: 0.04em !important;
-        line-height: 1.3 !important;
-        white-space: normal !important;
-        padding-left: 0.5rem !important;
-        padding-right: 0.5rem !important;
-      }
-    `;
+       Il widget è costruito con lo Shadow DOM: un involucro che
+       isola i suoi stili da quelli della pagina. Per questo il CSS
+       scritto più sopra non lo raggiunge, e lo stile va inserito
+       al suo interno da qui.
 
-    // 2. Cerca il widget ogni 0,1 secondi, finché non è pronto
-    var tries = 0;
-    var timer = setInterval(function () {
-      tries++;
-      var host = document.querySelector('be-widget');
-      var root = host && host.shadowRoot;
-      var btn = root && root.querySelector('.submit-btn');
+       Il CSS è il testo fra i due apici inclinati (backtick).
+       Per modificarlo basta cambiare i valori dopo i due punti;
+       il resto del blocco è la logica che lo inserisce.
+       ---------------------------------------------------------- */
+    (function () {
+      var css = `
+        /* Carattere del sito su tutto il widget */
+        * {
+          font-family: 'Jost', sans-serif !important;
+        }
 
-      // 3. Quando il pulsante esiste, inserisce il CSS dentro il widget
-      if (btn) {
-        var style = document.createElement('style');
-        style.textContent = css;
-        root.appendChild(style);
-        clearInterval(timer);
-      }
+        /* Pulsante "Controlla Disponibilità":
+           testo più piccolo e mandato a capo, per non uscire dal bordo */
+        .submit-btn {
+          font-size: 0.85rem !important;
+          letter-spacing: 0.04em !important;
+          line-height: 1.3 !important;
+          white-space: normal !important;
+          padding-left: 0.5rem !important;
+          padding-right: 0.5rem !important;
+        }
+      `;
 
-      // 4. Si ferma dopo circa 10 secondi se il widget non compare
-      if (tries > 100) clearInterval(timer);
-    }, 100);
-  })();
-</script>
+      /* Il widget si carica dopo la pagina: lo cerchiamo ogni decimo
+         di secondo e, appena è pronto, gli applichiamo lo stile. */
+      var tries = 0;
+      var timer = setInterval(function () {
+        tries++;
+        var host = document.querySelector('be-widget');
+        var root = host && host.shadowRoot;
+        var btn = root && root.querySelector('.submit-btn');
+
+        if (btn) {
+          var style = document.createElement('style');
+          style.textContent = css;
+          root.appendChild(style);
+          clearInterval(timer);
+        }
+
+        /* Dopo circa 10 secondi smettiamo di cercare */
+        if (tries > 100) clearInterval(timer);
+      }, 100);
+    })();
+  </script>
+
   <script>
+    /* Avvia il caricamento delle foto della colonna sinistra */
     loadPhotos(document.getElementById('photoStream'), 'photo-', { alt: 'Artieri Suites, Bologna' });
+
+    /* Chiude il menu dopo che si è toccata una voce, su telefono */
     document.querySelectorAll('.nav-links a').forEach(function (a) {
       a.addEventListener('click', function () { document.querySelector('.nav-links').classList.remove('open'); });
     });
