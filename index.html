@@ -222,6 +222,60 @@
       text-align: center;
     }
 
+    /* ---------- Contatti diretti sotto il widget ----------
+       Due pulsanti secondari: bordo sottile, angoli squadrati.
+       Più discreti del pulsante di prenotazione, che resta
+       l'azione principale del pannello. */
+    .panel-contact {
+      margin-top: 1.6rem;
+      padding-top: 1.4rem;
+      border-top: 1px solid rgba(139, 109, 105, 0.2);
+    }
+
+    .panel-contact-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--mauve);
+      text-align: center;
+      margin-bottom: 0.9rem;
+    }
+
+    .panel-contact-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .contact-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px; /* area di tocco comoda su telefono */
+      padding: 0.75rem 1rem;
+      font-family: 'Jost', sans-serif;
+      font-weight: 400;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--forest);
+      text-decoration: none;
+      background: transparent;
+      border: 1px solid var(--forest);
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .contact-btn:hover,
+    .contact-btn:focus-visible {
+      background: var(--forest);
+      color: var(--cream);
+    }
+
+    .contact-btn:focus-visible {
+      outline: 2px solid var(--mustard);
+      outline-offset: 2px;
+    }
+
     /* ==========================================================
        COLONNA FOTO
        Le immagini sono inserite da photos.js, non scritte a mano.
@@ -722,6 +776,28 @@
            sul booking engine. Se esistono tariffe non rimborsabili,
            la parola "flexible" non può restare. -->
       <p class="booking-note">Direct booking, with the same cancellation terms as our listings on other platforms.</p>
+
+      <!-- CONTATTI DIRETTI
+           Email: apre il programma di posta con l'oggetto già compilato.
+           WhatsApp: apre una chat con un messaggio iniziale già scritto,
+           che l'ospite può modificare prima di inviarlo.
+           Il numero va scritto senza "+" e senza spazi: 393780913611. -->
+      <div class="panel-contact">
+        <p class="panel-contact-label">Questions before booking?</p>
+        <div class="panel-contact-actions">
+          <a class="contact-btn"
+             href="mailto:info@artierisuites.it?subject=Enquiry%20about%20a%20stay%20at%20Artieri%20Suites"
+             aria-label="Email Artieri Suites">
+            Email us
+          </a>
+          <a class="contact-btn"
+             href="https://wa.me/393780913611?text=Hello%2C%20I%20have%20a%20question%20about%20a%20stay%20at%20Artieri%20Suites."
+             target="_blank" rel="noopener"
+             aria-label="Chat with Artieri Suites on WhatsApp">
+            WhatsApp
+          </a>
+        </div>
+      </div>
     </aside>
 
   </main>
