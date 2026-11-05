@@ -50,7 +50,7 @@
 
   <!-- Indirizzo ufficiale della pagina: evita che il sito risulti
        duplicato fra dominio e indirizzo di anteprima Vercel -->
-  <link rel="canonical" href="https://artierisuitesbologna.com/">
+  <link rel="canonical" href="https://www.artierisuitesbologna.com/">
 
   <!-- ==========================================================
        Anteprima quando il link viene condiviso (WhatsApp, social)
@@ -59,10 +59,10 @@
        ========================================================== -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Artieri Suites">
-  <meta property="og:url" content="https://artierisuitesbologna.com/">
+  <meta property="og:url" content="https://www.artierisuitesbologna.com/">
   <meta property="og:title" content="Artieri Suites, Piazza Maggiore | Save with a Direct Booking">
   <meta property="og:description" content="Four suites in Bologna's historic centre, a short walk from Piazza Maggiore.">
-  <meta property="og:image" content="https://artierisuitesbologna.com/assets/images/photo-01.jpg">
+  <meta property="og:image" content="https://www.artierisuitesbologna.com/assets/images/photo-01.jpg">
   <meta property="og:locale" content="en_GB">
   <meta name="twitter:card" content="summary_large_image">
 
@@ -89,8 +89,8 @@
     "@type": "LodgingBusiness",
     "name": "Artieri Suites, Piazza Maggiore",
     "description": "A small collection of four suites in Bologna's historic centre, a short walk from Piazza Maggiore.",
-    "url": "https://artierisuitesbologna.com/",
-    "image": "https://artierisuitesbologna.com/assets/images/photo-01.jpg",
+    "url": "https://www.artierisuitesbologna.com/",
+    "image": "https://www.artierisuitesbologna.com/assets/images/photo-01.jpg",
     "telephone": "+39 378 091 3611",
     "email": "info@artierisuites.it",
     "numberOfRooms": 4,
@@ -198,6 +198,21 @@
       display: block;
       width: 100%;
       margin: 0;
+    }
+
+    /* Il salto da "Book Now" si ferma sotto la barra di navigazione fissa */
+    #book { scroll-margin-top: 64px; }
+
+    /* Evidenziazione del widget quando si clicca "Book Now":
+       un bordo senape che compare e svanisce in poco più di un secondo */
+    .be-widget-wrap.is-highlighted {
+      animation: bookPulse 1.6s ease-out;
+    }
+
+    @keyframes bookPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(229, 184, 72, 0); }
+      20%  { box-shadow: 0 0 0 3px rgba(229, 184, 72, 0.95); }
+      100% { box-shadow: 0 0 0 0 rgba(229, 184, 72, 0); }
     }
 
     .booking-note {
@@ -498,6 +513,7 @@
     /* ===== Per chi ha disattivato le animazioni nel sistema ===== */
     @media (prefers-reduced-motion: reduce) {
       .photo-stream img { transition: none; }
+      .be-widget-wrap.is-highlighted { animation: none; outline: 3px solid var(--mustard); }
     }
   </style>
 </head>
@@ -798,6 +814,34 @@
   <script>
     /* Avvia il caricamento delle foto della colonna sinistra */
     loadPhotos(document.getElementById('photoStream'), 'photo-', { alt: 'Artieri Suites, Bologna' });
+
+    /* "Book Now": porta l'utente al widget di prenotazione.
+       Su desktop il pannello è già visibile, quindi lo evidenziamo;
+       su tablet e telefono scorriamo fino al pannello. */
+    (function () {
+      var panel = document.getElementById('book');
+      var wrap = panel && panel.querySelector('.be-widget-wrap');
+      if (!panel || !wrap) return;
+
+      var isNarrow = window.matchMedia('(max-width: 1023px)');
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      document.querySelectorAll('a[href="#book"]').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+
+          if (isNarrow.matches) {
+            panel.scrollIntoView({ behavior: reduced.matches ? 'auto' : 'smooth', block: 'start' });
+          }
+
+          /* Riavvia l'animazione anche se si clicca più volte */
+          wrap.classList.remove('is-highlighted');
+          void wrap.offsetWidth;
+          wrap.classList.add('is-highlighted');
+          setTimeout(function () { wrap.classList.remove('is-highlighted'); }, 1800);
+        });
+      });
+    })();
 
     /* Chiude il menu dopo che si è toccata una voce, su telefono */
     document.querySelectorAll('.nav-links a').forEach(function (a) {
